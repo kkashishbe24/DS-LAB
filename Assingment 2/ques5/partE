@@ -1,0 +1,71 @@
+#include <iostream>
+using namespace std;
+
+class SymmetricMatrix {
+private:
+    int *arr; // store only one triangle
+    int n;
+
+public:
+    SymmetricMatrix(int size) {
+        n = size;
+        arr = new int[n * (n + 1) / 2];
+        for (int i = 0; i < n * (n + 1) / 2; i++)
+            arr[i] = 0;
+    }
+
+    void set(int i, int j, int value) {
+        if (i >= j) { // lower triangle
+            int index = (i * (i - 1)) / 2 + (j - 1);
+            arr[index] = value;
+        } else { // upper triangle (mirror)
+            int index = (j * (j - 1)) / 2 + (i - 1);
+            arr[index] = value;
+        }
+    }
+
+    int get(int i, int j) {
+        if (i >= j) {
+            int index = (i * (i - 1)) / 2 + (j - 1);
+            return arr[index];
+        } else {
+            int index = (j * (j - 1)) / 2 + (i - 1);
+            return arr[index];
+        }
+    }
+
+    void display() {
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                cout << get(i, j) << " ";
+            }
+            cout << endl;
+        }
+    }
+
+    ~SymmetricMatrix() {
+        delete[] arr;
+    }
+};
+
+int main() {
+    int size;
+    cout << "Enter size of square matrix: ";
+    cin >> size;
+
+    SymmetricMatrix sm(size);
+
+    cout << "Enter elements of symmetric matrix:\n";
+    for (int i = 1; i <= size; i++) {
+        for (int j = 1; j <= size; j++) {
+            int val;
+            cin >> val;
+            sm.set(i, j, val);
+        }
+    }
+
+    cout << "\nSymmetric Matrix:\n";
+    sm.display();
+
+    return 0;
+}
