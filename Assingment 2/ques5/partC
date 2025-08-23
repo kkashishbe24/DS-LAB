@@ -1,0 +1,66 @@
+#include <iostream>
+using namespace std;
+
+class LowerTriangularMatrix {
+private:
+    int *arr; // store only non-zero elements
+    int n;
+
+public:
+    LowerTriangularMatrix(int size) {
+        n = size;
+        arr = new int[n * (n + 1) / 2]; // required size
+        for (int i = 0; i < n * (n + 1) / 2; i++)
+            arr[i] = 0;
+    }
+
+    void set(int i, int j, int value) {
+        if (i >= j) { // only store lower triangle
+            int index = (i * (i - 1)) / 2 + (j - 1);
+            arr[index] = value;
+        }
+    }
+
+    int get(int i, int j) {
+        if (i >= j) {
+            int index = (i * (i - 1)) / 2 + (j - 1);
+            return arr[index];
+        }
+        return 0; // above diagonal is zero
+    }
+
+    void display() {
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                cout << get(i, j) << " ";
+            }
+            cout << endl;
+        }
+    }
+
+    ~LowerTriangularMatrix() {
+        delete[] arr;
+    }
+};
+
+int main() {
+    int size;
+    cout << "Enter size of square matrix: ";
+    cin >> size;
+
+    LowerTriangularMatrix ltm(size);
+
+    cout << "Enter matrix elements:\n";
+    for (int i = 1; i <= size; i++) {
+        for (int j = 1; j <= size; j++) {
+            int val;
+            cin >> val;
+            ltm.set(i, j, val);
+        }
+    }
+
+    cout << "\nLower Triangular Matrix:\n";
+    ltm.display();
+
+    return 0;
+}
