@@ -1,0 +1,62 @@
+#include <iostream>
+using namespace std;
+
+class DiagonalMatrix {
+private:
+    int *arr; // store only diagonal elements
+    int n;
+
+public:
+    DiagonalMatrix(int size) {
+        n = size;
+        arr = new int[n];
+        for (int i = 0; i < n; i++)
+            arr[i] = 0; // initialize
+    }
+
+    void set(int i, int j, int value) {
+        if (i == j) {
+            arr[i - 1] = value; // store only if on diagonal (1-based indexing)
+        }
+    }
+
+    int get(int i, int j) {
+        if (i == j)
+            return arr[i - 1];
+        else
+            return 0; // non-diagonal elements are zero
+    }
+
+    void display() {
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                cout << get(i, j) << " ";
+            }
+            cout << endl;
+        }
+    }
+
+    ~DiagonalMatrix() {
+        delete[] arr;
+    }
+};
+
+int main() {
+    int size;
+    cout << "Enter size of square matrix: ";
+    cin >> size;
+
+    DiagonalMatrix dm(size);
+
+    cout << "Enter diagonal elements: ";
+    for (int i = 1; i <= size; i++) {
+        int val;
+        cin >> val;
+        dm.set(i, i, val);
+    }
+
+    cout << "\nDiagonal Matrix:\n";
+    dm.display();
+
+    return 0;
+}
