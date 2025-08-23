@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+
+int findMissingBinarySearch(int arr[], int n) {
+    int left = 0, right = n - 2; // n-1 elements, last index = n-2
+
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+
+        if (arr[mid] == mid + 1) {
+            // Missing number is in the right half
+            left = mid + 1;
+        } else {
+            // Missing number is in the left half
+            right = mid - 1;
+        }
+    }
+    return left + 1; // Missing number
+}
+
+int main() {
+    int arr[] = {1, 2, 3, 5, 6}; // Missing 4
+    int n = 6; // Numbers from 1 to 6
+
+    cout << "Missing Number: " << findMissingBinarySearch(arr, n) << endl;
+
+    return 0;
+}
