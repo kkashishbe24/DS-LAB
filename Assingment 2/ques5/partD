@@ -1,0 +1,66 @@
+#include <iostream>
+using namespace std;
+
+class UpperTriangularMatrix {
+private:
+    int *arr; // store only non-zero elements
+    int n;
+
+public:
+    UpperTriangularMatrix(int size) {
+        n = size;
+        arr = new int[n * (n + 1) / 2]; // required size
+        for (int i = 0; i < n * (n + 1) / 2; i++)
+            arr[i] = 0;
+    }
+
+    void set(int i, int j, int value) {
+        if (i <= j) { // only store upper triangle
+            int index = ((i - 1) * (2 * n - i + 2)) / 2 + (j - i);
+            arr[index] = value;
+        }
+    }
+
+    int get(int i, int j) {
+        if (i <= j) {
+            int index = ((i - 1) * (2 * n - i + 2)) / 2 + (j - i);
+            return arr[index];
+        }
+        return 0; // below diagonal is zero
+    }
+
+    void display() {
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                cout << get(i, j) << " ";
+            }
+            cout << endl;
+        }
+    }
+
+    ~UpperTriangularMatrix() {
+        delete[] arr;
+    }
+};
+
+int main() {
+    int size;
+    cout << "Enter size of square matrix: ";
+    cin >> size;
+
+    UpperTriangularMatrix utm(size);
+
+    cout << "Enter matrix elements:\n";
+    for (int i = 1; i <= size; i++) {
+        for (int j = 1; j <= size; j++) {
+            int val;
+            cin >> val;
+            utm.set(i, j, val);
+        }
+    }
+
+    cout << "\nUpper Triangular Matrix:\n";
+    utm.display();
+
+    return 0;
+}
