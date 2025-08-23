@@ -1,0 +1,80 @@
+#include <iostream>
+using namespace std;
+
+class TriDiagonalMatrix {
+private:
+    int *arr; // store only needed elements
+    int n;
+
+public:
+    TriDiagonalMatrix(int size) {
+        n = size;
+        arr = new int[3 * n - 2]; // storage size
+        for (int i = 0; i < 3 * n - 2; i++)
+            arr[i] = 0;
+    }
+
+    void set(int i, int j, int value) {
+        if (i - j == 1) { // lower diagonal
+            arr[i - 2] = value;
+        }
+        else if (i - j == 0) { // main diagonal
+            arr[n - 1 + i - 1] = value;
+        }
+        else if (i - j == -1) { // upper diagonal
+            arr[2 * n - 1 + i - 1] = value;
+        }
+        // else do nothing (outside tri-diagonal)
+    }
+
+    int get(int i, int j) {
+        if (i - j == 1) {
+            return arr[i - 2]; // lower diagonal
+        }
+        else if (i - j == 0) {
+            return arr[n - 1 + i - 1]; // main diagonal
+        }
+        else if (i - j == -1) {
+            return arr[2 * n - 1 + i - 1]; // upper diagonal
+        }
+        else {
+            return 0;
+        }
+    }
+
+    void display() {
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                cout << get(i, j) << " ";
+            }
+            cout << endl;
+        }
+    }
+
+    ~TriDiagonalMatrix() {
+        delete[] arr;
+    }
+};
+
+int main() {
+    int size;
+    cout << "Enter size of square matrix: ";
+    cin >> size;
+
+    TriDiagonalMatrix tdm(size);
+
+    cout << "Enter non-zero elements of tri-diagonal matrix:\n";
+    for (int i = 1; i <= size; i++) {
+        for (int j = 1; j <= size; j++) {
+            int val;
+            cin >> val;
+            tdm.set(i, j, val);
+        }
+    }
+
+    cout << "\nTri-diagonal Matrix:\n";
+    tdm.display();
+
+    return 0;
+}
+
