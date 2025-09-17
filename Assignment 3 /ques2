@@ -1,0 +1,34 @@
+#include <iostream>
+#include<stack>
+using namespace std;
+
+string reversestring(const string &str)
+{
+    stack <char>s;
+    
+    for(char ch: str)
+    {
+    s.push(ch);
+    }
+    string reversed="";
+    while(!s.empty())
+    {
+       reversed=reversed+s.top();
+       s.pop();
+       
+    }
+    return reversed;
+}
+
+int main()
+{
+   string input;
+   
+   cout<<"enter input";
+   getline(cin,input);
+   
+   string reversed=reversestring(input);
+   cout<<"reversed string "<<reversed<<endl;
+
+    return 0;
+}
