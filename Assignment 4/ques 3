@@ -1,0 +1,59 @@
+#include <iostream>
+using namespace std;
+#include<queue>
+
+void interqueue(queue<int>&q){
+    if(q.empty())
+    return;
+    
+    int halfsize=q.size()/2;
+    
+    queue<int>firsthalf;
+    
+    for(int i=0;i<halfsize;i++)
+    {
+        firsthalf.push(q.front());
+        q.pop();
+    }
+    
+    while(!firsthalf.empty())
+    {
+        q.push(firsthalf.front());
+        firsthalf.pop();
+        q.push(q.front());
+        q.pop();
+    }
+    
+    
+}
+
+int main()
+{ queue<int> q;
+   int n;
+   cout << "Enter number of elements (even number): ";
+   cin >> n;
+
+   if (n % 2 != 0) {
+       cout << "Queue must have even number of elements for interleaving." << endl;
+       return 1;
+   }
+
+   cout << "Enter " << n << " elements separated by spaces: ";
+   for (int i = 0; i < n; i++) {
+       int val;
+       cin >> val;
+       q.push(val);
+   }
+
+
+    interqueue(q);
+
+    cout << "Interleaved queue: ";
+    while (!q.empty()) {
+        cout << q.front() << " ";
+        q.pop();
+    }
+    cout << endl;
+
+    return 0;
+}
