@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+
+struct node{
+    int data;
+    Node* next;
+};
+Node * newNode(int data)
+{
+    Node* temp = new Node;
+    temp->data = data;
+    temp->next = nullptr;
+    return temp;
+}
+void findMiddle(Node* head) {
+    if (head == nullptr) {
+        cout << "The list is empty." << endl;
+        return;
+    }
+    Node* slow = head;
+    Node* fast = head;
+
+    while (fast != nullptr && fast->next != nullptr) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    cout << "Middle element: " << slow->data << endl;
+}
+int main()
+{
+    node *head=newNode(1);
+    head->next=newNode(2);
+    head->next->next=newNode(3);
+    head->next->next->next=newNode(4);
+    head->next->next->next->next=newNode(5);
+    
+    middlelist(head);
+    
+    return 0;
+}
