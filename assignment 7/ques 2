@@ -1,0 +1,37 @@
+#include <iostream>
+using namespace std;
+
+void improvedSelectionSort(int a[], int n){
+    int left = 0, right = n - 1;
+    while(left < right){
+        int min_i = left, max_i = left;
+        for(int i = left; i <= right; i++){
+            if(a[i] < a[min_i]) min_i = i;
+            if(a[i] > a[max_i]) max_i = i;
+        }
+        int t = a[left]; 
+        a[left] = a[min_i]; 
+        a[min_i] = t;
+
+        if(max_i == left) max_i = min_i;
+
+        t = a[right];
+        a[right] = a[max_i];
+        a[max_i] = t;
+
+        left++;
+        right--;
+    }
+}
+
+int main(){
+    int a[] = {64, 34, 25, 12, 22, 11, 90};
+    int n = 7;
+
+    improvedSelectionSort(a, n);
+
+    for(int i=0;i<n;i++) cout << a[i] << " ";
+}
+
+output:
+11 12 22 25 34 64 90
